@@ -1,3 +1,5 @@
+> **نکته:** سامانه‌ی پلاک‌خوان هوشمند ایرانی این مخزن، مستقل از قالب زیر، در پوشه‌ی [`anpr/`](anpr/README.md) قرار دارد.
+
 # Durable Chat App
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/tiny-frost-1800)

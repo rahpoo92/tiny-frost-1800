@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# runtime data - local to each installation, never shared/committed
+data/anpr.db
+data/snapshots/
+data/templates/
+config.yaml
+*.log
