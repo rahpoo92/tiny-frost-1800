@@ -3,6 +3,11 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
+# PyInstaller build output (see PACKAGING.md) - rebuilt locally, not committed
+build/
+dist/
+*.spec
+
 # runtime data - local to each installation, never shared/committed
 data/anpr.db
 data/snapshots/

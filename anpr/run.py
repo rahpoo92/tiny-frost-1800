@@ -12,7 +12,8 @@ import shutil
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent))
+if not getattr(sys, "frozen", False):
+    sys.path.insert(0, str(Path(__file__).parent))
 
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
@@ -22,8 +23,16 @@ from anpr_app.gui.main_window import MainWindow  # noqa: E402
 from anpr_app.gui.style import apply_app_style  # noqa: E402
 
 
+def app_dir() -> Path:
+    """Directory holding config.yaml/data -- next to the .exe when frozen (PyInstaller
+    sets sys.frozen and __file__ no longer points there), next to this script otherwise."""
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).parent
+    return Path(__file__).parent
+
+
 def resolve_config_path() -> Path:
-    project_root = Path(__file__).parent
+    project_root = app_dir()
     if len(sys.argv) > 1:
         path = Path(sys.argv[1])
         if not path.exists():
@@ -34,6 +43,9 @@ def resolve_config_path() -> Path:
     path = project_root / "config.yaml"
     if not path.exists():
         example = project_root / "config.example.yaml"
+        if not example.exists():
+            print(f"فایل نمونه‌ی تنظیمات یافت نشد: {example}")
+            sys.exit(1)
         shutil.copyfile(example, path)
         print(f"فایل تنظیمات ساخته شد: {path}")
         print("پیش از اجرای بعدی، آدرس دوربین و سایر تنظیمات را در این فایل ویرایش کنید.")
