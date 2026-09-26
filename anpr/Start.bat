@@ -5,9 +5,9 @@ cd /d "%~dp0"
 
 where python >nul 2>nul
 if errorlevel 1 (
-    echo پایتون روی این سیستم پیدا نشد.
-    echo لطفا از آدرس زیر پایتون نسخه ۳.۱۱ یا بالاتر را نصب کنید.
-    echo هنگام نصب، حتما تیک "Add python.exe to PATH" را بزنید.
+    echo Python was not found on this system.
+    echo Please install Python 3.11 or newer from the link below.
+    echo During setup, make sure to check "Add python.exe to PATH".
     echo.
     echo https://www.python.org/downloads/
     echo.
@@ -16,10 +16,10 @@ if errorlevel 1 (
 )
 
 if not exist ".venv\Scripts\python.exe" (
-    echo در حال آماده‌سازی برنامه برای اولین بار، لطفا صبر کنید...
+    echo Setting up the app for the first time, please wait...
     python -m venv .venv
     if errorlevel 1 (
-        echo ساخت محیط برنامه با خطا مواجه شد.
+        echo Failed to create the app environment.
         pause
         exit /b 1
     )
@@ -27,7 +27,7 @@ if not exist ".venv\Scripts\python.exe" (
     python -m pip install --upgrade pip
     pip install -r requirements.txt
     if errorlevel 1 (
-        echo نصب بسته‌های مورد نیاز با خطا مواجه شد. اتصال اینترنت را بررسی کنید.
+        echo Failed to install required packages. Check your internet connection.
         pause
         exit /b 1
     )
@@ -37,14 +37,14 @@ if not exist ".venv\Scripts\python.exe" (
 
 if not exist "config.yaml" (
     copy config.example.yaml config.yaml >nul
-    echo فایل تنظیمات ساخته شد: config.yaml
-    echo پنجره‌ی Notepad باز می‌شود؛ آدرس دوربین را ویرایش کنید، ذخیره کنید و ببندید تا برنامه ادامه پیدا کند.
+    echo Settings file created: config.yaml
+    echo Notepad will open - set your camera source, then save and close it to continue.
     pause
     notepad config.yaml
 )
 
 python run.py
 if errorlevel 1 (
-    echo برنامه با خطا متوقف شد. پیام بالا را برای رفع مشکل بررسی کنید.
+    echo The app stopped with an error - see the message above.
     pause
 )

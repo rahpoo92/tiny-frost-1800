@@ -3,14 +3,13 @@ chcp 65001 >nul
 setlocal
 cd /d "%~dp0"
 
-echo این اسکریپت یک فایل PlateReader.exe مستقل می‌سازد که می‌توانید
-echo آن را به همراه config.example.yaml روی هر سیستم ویندوزی کپی کنید
-echo (نیازی به نصب پایتون روی آن سیستم مقصد نیست).
+echo This builds a standalone PlateReader.exe that you can copy, together
+echo with config.example.yaml, to any Windows PC (no Python needed there).
 echo.
 
 where python >nul 2>nul
 if errorlevel 1 (
-    echo پایتون پیدا نشد. ابتدا از https://www.python.org/downloads/ نصب کنید.
+    echo Python was not found. Install it first from https://www.python.org/downloads/
     pause
     exit /b 1
 )
@@ -27,19 +26,19 @@ if not exist ".venv\Scripts\python.exe" (
 pip install pyinstaller
 
 echo.
-echo در حال ساخت PlateReader.exe ...
+echo Building PlateReader.exe ...
 pyinstaller --noconfirm --onefile --console --name PlateReader run.py
 
 if not exist "dist\PlateReader.exe" (
-    echo ساخت فایل exe با خطا مواجه شد؛ پیام‌های بالا را بررسی کنید.
+    echo Building the exe failed - check the messages above.
     pause
     exit /b 1
 )
 
 copy config.example.yaml dist\ >nul
 echo.
-echo تمام شد. در پوشه‌ی dist دو فایل هست:
+echo Done. The dist folder now has two files:
 echo   PlateReader.exe
 echo   config.example.yaml
-echo این دو فایل را با هم به هر سیستم ویندوزی (حتی بدون پایتون) کپی کنید و PlateReader.exe را اجرا کنید.
+echo Copy both of these together to any Windows PC (even without Python) and run PlateReader.exe.
 pause
